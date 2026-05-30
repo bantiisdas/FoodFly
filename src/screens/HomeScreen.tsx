@@ -15,81 +15,66 @@ import {
 import { restaurants } from "../../constatnts/data/restaurants";
 import RestaurantCard from "../components/RestaurantCard";
 import { useState } from "react";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Onboarding1 from "./Onboarding1";
+import Onboarding2 from "./Onboarding2";
+import RestaurantDetails from "./RestaurantDetails";
+import Home from "../components/Home";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import SearchScreen from "./SearchScreen";
+import OrdersScreen from "./OrdersScreen";
+import ProfileScreen from "./ProfileScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 function HomeScreen() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const Stack = createStackNavigator();
 
-  const filteredRestaurants = restaurants.filter(
-    (restaurant) =>
-      restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      restaurant.category.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  const Tab = createBottomTabNavigator();
+
+  const screenOptions = ({ route }: { route: { name: string } }) => ({
+    headerShown: false,
+    tabBarActiveTintColor: "#ff6b35",
+    tabBarInactiveTintColor: "#64748b",
+    tabBarStyle: {
+      backgroundColor: "#ffffff",
+      borderTopColor: "#e5e7eb",
+      height: 100,
+      paddingBottom: 6,
+      paddingTop: 6,
+    },
+    tabBarIcon: ({ color, size }: { color: string; size: number }) => {
+      let iconName: keyof typeof Ionicons.glyphMap = "home";
+
+      if (route.name === "HomeScreen") {
+        iconName = "home";
+      } else if (route.name === "Search") {
+        iconName = "search";
+      } else if (route.name === "Orders") {
+        iconName = "basket";
+      } else if (route.name === "Profile") {
+        iconName = "person";
+      }
+
+      return <Ionicons name={iconName} size={size} color={color} />;
+    },
+  });
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Header Section */}
-      <View style={styles.header}>
-        <Text style={styles.title}>FoodFly</Text>
-        <Text style={styles.subtitle}>
-          Your next meal is just a few taps away.
-        </Text>
-      </View>
+    <SafeAreaView style={styles.container} edges={["top"]}>
+      {/* <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Onboarding1" component={Onboarding1} />
+        <Stack.Screen name="Onboarding2" component={Onboarding2} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="RestaurantDetails" component={RestaurantDetails} />
+      </Stack.Navigator> */}
 
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <Text style={styles.searchIcon}>🔍</Text>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search restaurants or cuisine..."
-          placeholderTextColor="#999"
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-      </View>
-
-      {/* Sorting Pills */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.filtersContainer}
-      >
-        <View style={[styles.filterPill, styles.filterPillActive]}>
-          <Text style={styles.filterPillTextActive}>All</Text>
-        </View>
-        <View style={styles.filterPill}>
-          <Text style={styles.filterPillText}>Fastest</Text>
-        </View>
-        <View style={styles.filterPill}>
-          <Text style={styles.filterPillText}>Highest Rated</Text>
-        </View>
-        <View style={styles.filterPill}>
-          <Text style={styles.filterPillText}>Budget</Text>
-        </View>
-      </ScrollView>
-
-      {/* Results Counter */}
-      <View style={styles.resultsInfo}>
-        <Text style={styles.resultsText}>
-          {filteredRestaurants.length} restaurant
-          {filteredRestaurants.length !== 1 ? "s" : ""} available
-        </Text>
-      </View>
-
-      {/* Restaurant List */}
-      <FlatList
-        data={filteredRestaurants}
-        renderItem={({ item }) => <RestaurantCard {...item} />}
-        keyExtractor={(item) => item.id}
-        scrollEnabled={true}
-        contentContainerStyle={styles.listContainer}
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Text style={styles.emptyIcon}>🔍</Text>
-            <Text style={styles.emptyText}>No restaurants found</Text>
-            <Text style={styles.emptySubtext}>Try a different search</Text>
-          </View>
-        }
-      />
+      <Tab.Navigator screenOptions={screenOptions}>
+        <Tab.Screen name="Home" component={Home} options={{ title: "Home" }} />
+        <Tab.Screen name="Search" component={SearchScreen} />
+        <Tab.Screen name="Orders" component={OrdersScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
+      </Tab.Navigator>
     </SafeAreaView>
   );
 }
@@ -97,7 +82,7 @@ function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "#fff",
   },
   header: {
     paddingHorizontal: 16,

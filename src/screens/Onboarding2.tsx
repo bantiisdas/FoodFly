@@ -17,7 +17,7 @@ const Onboarding2 = () => {
       </Text>
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.navigate("HomeScreen")}
       >
         <Text style={styles.buttonText}>Get Started</Text>
       </Pressable>
