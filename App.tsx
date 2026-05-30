@@ -9,59 +9,49 @@ import SearchScreen from "./src/screens/SearchScreen";
 import OrdersScreen from "./src/screens/OrdersScreen";
 import Onboarding1 from "./src/screens/Onboarding1";
 import Onboarding2 from "./src/screens/Onboarding2";
+import LoginScreen from "./src/screens/LoginScreen";
+import RegisterScreen from "./src/screens/RegisterScreen";
 import Home from "./src/components/Home";
 import RestaurantDetails from "./src/screens/RestaurantDetails";
+import { useAppStore } from "./src/stores/app-store";
 
 //Dynamic Navigation
 const Stack = createStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
-const screenOptions = ({ route }: { route: { name: string } }) => ({
-  headerShown: false,
-  tabBarActiveTintColor: "#ff6b35",
-  tabBarInactiveTintColor: "#64748b",
-  tabBarStyle: {
-    backgroundColor: "#ffffff",
-    borderTopColor: "#e5e7eb",
-    height: 100,
-    paddingBottom: 6,
-    paddingTop: 6,
-  },
-  tabBarIcon: ({ color, size }: { color: string; size: number }) => {
-    let iconName: keyof typeof Ionicons.glyphMap = "home";
+import * as Linking from "expo-linking";
 
-    if (route.name === "HomeScreen") {
-      iconName = "home";
-    } else if (route.name === "Search") {
-      iconName = "search";
-    } else if (route.name === "Orders") {
-      iconName = "basket";
-    } else if (route.name === "Profile") {
-      iconName = "person";
-    }
-
-    return <Ionicons name={iconName} size={size} color={color} />;
+const linking = {
+  prefixes: [Linking.createURL("/"), "foodfly://"],
+  config: {
+    screens: {
+      RestaurantDetails: "restaurant/:id",
+    },
   },
-});
+};
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      {/* <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{ title: "Home" }}
-        />
-        <Tab.Screen name="Search" component={SearchScreen} />
-        <Tab.Screen name="Orders" component={OrdersScreen} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
-      </Tab.Navigator> */}
+  const isLoggedIn = useAppStore((s) => s.isAuthenticated);
+  console.log(isLoggedIn);
+  const isOnboarded = useAppStore((s) => s.isOnboarded);
 
+  return (
+    <NavigationContainer linking={linking}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Onboarding1" component={Onboarding1} />
-        <Stack.Screen name="Onboarding2" component={Onboarding2} />
+        {!isOnboarded && (
+          <>
+            <Stack.Screen name="Onboarding1" component={Onboarding1} />
+            <Stack.Screen name="Onboarding2" component={Onboarding2} />
+          </>
+        )}
+        {!isLoggedIn && (
+          <>
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
+            <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+          </>
+        )}
+
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="RestaurantDetails" component={RestaurantDetails} />
       </Stack.Navigator>

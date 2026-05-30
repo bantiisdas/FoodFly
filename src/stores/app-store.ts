@@ -1,4 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 interface UserCredential {
   name: string;
@@ -15,22 +17,27 @@ interface appStore {
   addUser: ({ name, id, password }: UserCredential) => void;
 }
 
-export const useAppStore = create<appStore>()((set, get) => ({
-  userCreds: [],
-  isOnboarded: false,
-  isAuthenticated: false,
-  setIsOnboarded: () =>
-    set((state) => ({
-      isOnboarded: !state.isOnboarded,
-    })),
-  setIsAuthenticated: () =>
-    set((state) => ({
-      isAuthenticated: !state.isAuthenticated,
-    })),
-  addUser: (userDetails) =>
-    set((state) => ({
-      userCreds: state.userCreds.some((user) => user.id === userDetails.id)
-        ? state.userCreds
-        : [userDetails, ...state.userCreds],
-    })),
-}));
+export const useAppStore = create<appStore>()(
+  persist(
+    (set, get) => ({
+      userCreds: [],
+      isOnboarded: false,
+      isAuthenticated: false,
+      setIsOnboarded: () =>
+        set((state) => ({
+          isOnboarded: !state.isOnboarded,
+        })),
+      setIsAuthenticated: () =>
+        set((state) => ({
+          isAuthenticated: !state.isAuthenticated,
+        })),
+      addUser: (userDetails) =>
+        set((state) => ({
+          userCreds: state.userCreds.some((user) => user.id === userDetails.id)
+            ? state.userCreds
+            : [userDetails, ...state.userCreds],
+        })),
+    }),
+    { name: "app-storage", storage: createJSONStorage(() => AsyncStorage) },
+  ),
+);

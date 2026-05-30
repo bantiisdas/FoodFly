@@ -26,11 +26,12 @@ import SearchScreen from "./SearchScreen";
 import OrdersScreen from "./OrdersScreen";
 import ProfileScreen from "./ProfileScreen";
 import { Ionicons } from "@expo/vector-icons";
+import { useOrderStore } from "../stores/order-store";
 
 function HomeScreen() {
   const Stack = createStackNavigator();
-
   const Tab = createBottomTabNavigator();
+  const cartItems = useOrderStore((s) => s.cart);
 
   const screenOptions = ({ route }: { route: { name: string } }) => ({
     headerShown: false,
@@ -72,7 +73,16 @@ function HomeScreen() {
       <Tab.Navigator screenOptions={screenOptions}>
         <Tab.Screen name="Home" component={Home} options={{ title: "Home" }} />
         <Tab.Screen name="Search" component={SearchScreen} />
-        <Tab.Screen name="Orders" component={OrdersScreen} />
+        <Tab.Screen
+          name="Orders"
+          component={OrdersScreen}
+          options={{
+            tabBarBadge: cartItems.length,
+            tabBarBadgeStyle: {
+              display: cartItems.length === 0 ? "none" : "flex",
+            },
+          }}
+        />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
     </SafeAreaView>

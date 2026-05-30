@@ -7,8 +7,38 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useAppStore } from "../stores/app-store";
+import { useOrderStore } from "../stores/order-store";
+import { restaurants } from "../../constatnts/data/restaurants";
 
 const Profile = () => {
+  const user = useAppStore((s) => s.userCreds[0]);
+  const orders = useOrderStore((s) => s.orders);
+
+  const displayName = user?.name ?? "Guest User";
+  const displayEmail = user?.id ?? "guest@example.com";
+  const avatarLetter = displayName ? displayName.charAt(0).toUpperCase() : "G";
+
+  const ordersCount = orders.length;
+
+  // Favorites: unique item names across all orders
+  const favoriteItems = new Set(orders.flat().map((o) => o.item));
+  const favoritesCount = favoriteItems.size;
+
+  // Rating: average rating of restaurants the user has ordered from (fallback to 4.5)
+  const orderedRestaurantIds = Array.from(
+    new Set(orders.flat().map((o) => o.restaurantId)),
+  );
+  const orderedRestaurants = restaurants.filter((r) =>
+    orderedRestaurantIds.includes(r.id),
+  );
+  const rating = orderedRestaurants.length
+    ? (
+        orderedRestaurants.reduce((sum, r) => sum + r.rating, 0) /
+        orderedRestaurants.length
+      ).toFixed(1)
+    : "4.5";
+
   return (
     <ScrollView
       style={styles.container}
@@ -16,25 +46,25 @@ const Profile = () => {
     >
       <View style={styles.hero}>
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>A</Text>
+          <Text style={styles.avatarText}>{avatarLetter}</Text>
         </View>
         <View style={styles.userInfo}>
-          <Text style={styles.userName}>Ariana Morgan</Text>
-          <Text style={styles.userEmail}>ariana.morgan@example.com</Text>
+          <Text style={styles.userName}>{displayName}</Text>
+          <Text style={styles.userEmail}>{displayEmail}</Text>
         </View>
       </View>
 
       <View style={styles.statsRow}>
         <View style={styles.statCard}>
-          <Text style={styles.statValue}>34</Text>
+          <Text style={styles.statValue}>{ordersCount}</Text>
           <Text style={styles.statLabel}>Orders</Text>
         </View>
         <View style={styles.statCard}>
-          <Text style={styles.statValue}>4.9</Text>
+          <Text style={styles.statValue}>{rating}</Text>
           <Text style={styles.statLabel}>Rating</Text>
         </View>
         <View style={styles.statCard}>
-          <Text style={styles.statValue}>128</Text>
+          <Text style={styles.statValue}>{favoritesCount}</Text>
           <Text style={styles.statLabel}>Favorites</Text>
         </View>
       </View>

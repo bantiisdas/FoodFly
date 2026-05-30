@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
+import { useAppStore } from "../stores/app-store";
 
 const Onboarding2 = () => {
+  const setIsOnboarded = useAppStore((s) => s.setIsOnboarded);
+  const isLoggedIn = useAppStore((s) => s.isAuthenticated);
   const navigation = useNavigation<any>();
 
   return (
@@ -17,7 +20,16 @@ const Onboarding2 = () => {
       </Text>
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("HomeScreen")}
+        onPress={() => {
+          const routeName = isLoggedIn ? "HomeScreen" : "LoginScreen";
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: routeName }],
+            }),
+          );
+          setIsOnboarded();
+        }}
       >
         <Text style={styles.buttonText}>Get Started</Text>
       </Pressable>

@@ -10,12 +10,25 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { restaurants } from "../../constatnts/data/restaurants";
+import { useOrderStore } from "../stores/order-store";
+import { useNavigation } from "@react-navigation/native";
 
-const RestaurantDetails: React.FC<any> = ({ route, navigation }) => {
+const RestaurantDetails: React.FC<any> = ({ route }) => {
   const { id } = route.params || {};
   const restaurant = restaurants.find((r) => r.id === id) || restaurants[0];
+  const addToCart = useOrderStore((s) => s.addToCart);
+  const cart = useOrderStore((s) => s.cart);
+  // console.log(cart);
+  const navigation = useNavigation<any>();
 
-  const addDishes = (restaurantId: string, dishID: string) => {};
+  const addDishes = (
+    dishID: string,
+    restaurantId: string,
+    name: string,
+    price: string,
+  ) => {
+    addToCart(dishID, restaurantId, name, price);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -103,7 +116,9 @@ const RestaurantDetails: React.FC<any> = ({ route, navigation }) => {
                     <View style={styles.menuAction}>
                       <Text style={styles.menuPrice}>{item.price}</Text>
                       <TouchableOpacity
-                        onPress={() => addDishes(id, item.id)}
+                        onPress={() =>
+                          addDishes(item.id, id, item.name, item.price)
+                        }
                         style={styles.addButton}
                         activeOpacity={0.7}
                       >
@@ -117,8 +132,21 @@ const RestaurantDetails: React.FC<any> = ({ route, navigation }) => {
           )}
 
           <View style={styles.ctaRow}>
-            <TouchableOpacity style={styles.ctaButton}>
-              <Text style={styles.ctaText}>Order Now</Text>
+            <TouchableOpacity
+              onPress={() => {
+                if (cart.length !== 0) {
+                  navigation.navigate("HomeScreen", { screen: "Orders" });
+                }
+              }}
+              style={[
+                styles.ctaButton,
+                {
+                  backgroundColor: "#ca5227",
+                  opacity: cart.length === 0 ? 0.5 : 1,
+                },
+              ]}
+            >
+              <Text style={styles.ctaText}>Go to Cart</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.secondaryButton}>
               <Text style={styles.secondaryText}>Call</Text>

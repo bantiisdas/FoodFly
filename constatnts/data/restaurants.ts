@@ -3,6 +3,7 @@ export type MenuItem = {
   name: string;
   description: string;
   price: string;
+  veg?: boolean;
   image?: string;
 };
 
@@ -34,15 +35,16 @@ export const restaurants: Restaurant[] = [
     description:
       "Classic burgers, crispy fries, and house-made shakes for your comfort craving.",
     image:
-      "https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1543353071-087092ec393a?auto=format&fit=crop&w=800&q=80",
     offers: ["10% off first order", "Free fries on orders over $30"],
     menu: [
       {
         id: "menu_001_a",
         name: "Classic Cheeseburger",
         description:
-          "Juicy Angus beef patty with cheddar, lettuce, tomato, and house sauce.",
+          "Juicy Angus patty with cheddar, lettuce, tomato, and house sauce.",
         price: "$12",
+        veg: true,
       },
       {
         id: "menu_001_b",
@@ -50,6 +52,7 @@ export const restaurants: Restaurant[] = [
         description:
           "Smoked bacon, caramelized onions, and garlic aioli on a brioche bun.",
         price: "$14",
+        veg: true,
       },
       {
         id: "menu_001_c",
@@ -57,6 +60,18 @@ export const restaurants: Restaurant[] = [
         description:
           "Vanilla, chocolate, and strawberry milkshakes topped with whipped cream.",
         price: "$9",
+        veg: true,
+        image:
+          "https://images.unsplash.com/photo-1606755962777-3b9d3a7d6c4f?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "menu_001_d",
+        name: "Chicken Burger",
+        description: "Grilled chicken patty with lettuce, tomato, and mayo.",
+        price: "$13",
+        veg: false,
+        image:
+          "https://images.unsplash.com/photo-1543353071-087092ec393a?auto=format&fit=crop&w=800&q=80",
       },
     ],
   },
@@ -81,6 +96,7 @@ export const restaurants: Restaurant[] = [
         description:
           "Quinoa, roasted vegetables, chickpeas, and tahini dressing.",
         price: "$13",
+        veg: true,
       },
       {
         id: "menu_002_b",
@@ -88,6 +104,7 @@ export const restaurants: Restaurant[] = [
         description:
           "Kale, avocado, apple, pumpkin seeds, and lemon-herb vinaigrette.",
         price: "$11",
+        veg: true,
       },
       {
         id: "menu_002_c",
@@ -95,6 +112,7 @@ export const restaurants: Restaurant[] = [
         description:
           "Mixed berries, coconut water, and banana for a refreshing boost.",
         price: "$7",
+        veg: true,
       },
     ],
   },
@@ -119,18 +137,21 @@ export const restaurants: Restaurant[] = [
         description:
           "Creamy tomato curry with tender chicken and aromatic spices.",
         price: "$16",
+        veg: true,
       },
       {
         id: "menu_003_b",
         name: "Lamb Rogan Josh",
         description: "Slow-simmered lamb in rich Kashmiri gravy.",
         price: "$18",
+        veg: true,
       },
       {
         id: "menu_003_c",
         name: "Vegetable Samosas",
         description: "Crispy pastry stuffed with spiced potatoes and peas.",
         price: "$6",
+        veg: true,
       },
     ],
   },
@@ -155,18 +176,21 @@ export const restaurants: Restaurant[] = [
         description:
           "Fresh mozzarella, basil, and tomato sauce on a wood-fired crust.",
         price: "$15",
+        veg: true,
       },
       {
         id: "menu_004_b",
         name: "Truffle Mushroom Pizza",
         description: "Wild mushrooms, truffle oil, ricotta, and arugula.",
         price: "$19",
+        veg: true,
       },
       {
         id: "menu_004_c",
         name: "Garlic Knots",
         description: "Warm garlic knots with herb butter and parmesan.",
         price: "$7",
+        veg: true,
       },
     ],
   },
@@ -190,6 +214,7 @@ export const restaurants: Restaurant[] = [
         name: "Carne Asada Tacos",
         description: "Grilled steak, onions, cilantro, and salsa verde.",
         price: "$10",
+        veg: true,
       },
       {
         id: "menu_005_b",
@@ -197,6 +222,7 @@ export const restaurants: Restaurant[] = [
         description:
           "Roasted squash, black beans, avocado, and chipotle crema.",
         price: "$11",
+        veg: true,
       },
       {
         id: "menu_005_c",
@@ -204,6 +230,7 @@ export const restaurants: Restaurant[] = [
         description:
           "Crispy chips, cheese, pico de gallo, jalapeños, and guacamole.",
         price: "$13",
+        veg: true,
       },
     ],
   },
@@ -227,18 +254,21 @@ export const restaurants: Restaurant[] = [
         name: "Salmon Nigiri",
         description: "Fresh salmon over seasoned sushi rice.",
         price: "$14",
+        veg: true,
       },
       {
         id: "menu_006_b",
         name: "Dragon Roll",
         description: "Eel, avocado, cucumber, and tobiko with sweet sauce.",
         price: "$18",
+        veg: true,
       },
       {
         id: "menu_006_c",
         name: "Miso Soup",
         description: "Traditional miso broth with tofu and scallions.",
         price: "$4",
+        veg: true,
       },
     ],
   },
@@ -263,18 +293,21 @@ export const restaurants: Restaurant[] = [
         description:
           "Silky noodles tossed in chili sesame sauce and minced pork.",
         price: "$12",
+        veg: true,
       },
       {
         id: "menu_007_b",
         name: "Pork Dumplings",
         description: "Steamed dumplings with ginger-soy dipping sauce.",
         price: "$8",
+        veg: true,
       },
       {
         id: "menu_007_c",
         name: "House Stir-Fry Bowl",
         description: "Crispy vegetables, noodles, and savory sauce.",
         price: "$13",
+        veg: true,
       },
     ],
   },
@@ -299,18 +332,21 @@ export const restaurants: Restaurant[] = [
         description:
           "Soft roll swirled with cinnamon and topped with cream cheese icing.",
         price: "$6",
+        veg: true,
       },
       {
         id: "menu_008_b",
         name: "Espresso Latte",
         description: "Smooth espresso with steamed milk and velvety foam.",
         price: "$5",
+        veg: true,
       },
       {
         id: "menu_008_c",
         name: "Berry Tart",
         description: "Flaky pastry filled with custard and fresh berries.",
         price: "$7",
+        veg: true,
       },
     ],
   },
