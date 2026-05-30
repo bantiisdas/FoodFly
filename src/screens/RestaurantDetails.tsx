@@ -7,17 +7,15 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import {
-  SafeAreaView,
-  SafeAreaProvider,
-  SafeAreaInsetsContext,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { restaurants } from "../../constatnts/data/restaurants";
 
 const RestaurantDetails: React.FC<any> = ({ route, navigation }) => {
   const { id } = route.params || {};
   const restaurant = restaurants.find((r) => r.id === id) || restaurants[0];
+
+  const addDishes = (restaurantId: string, dishID: string) => {};
 
   return (
     <SafeAreaView style={styles.container}>
@@ -87,6 +85,34 @@ const RestaurantDetails: React.FC<any> = ({ route, navigation }) => {
                   • {offer}
                 </Text>
               ))}
+            </View>
+          )}
+
+          {restaurant.menu?.length > 0 && (
+            <View style={styles.menuSection}>
+              <Text style={styles.sectionTitle}>Popular dishes</Text>
+              <View style={styles.menuList}>
+                {restaurant.menu.slice(0, 3).map((item) => (
+                  <View key={item.id} style={styles.menuItem}>
+                    <View style={styles.menuText}>
+                      <Text style={styles.menuName}>{item.name}</Text>
+                      <Text style={styles.menuDescription}>
+                        {item.description}
+                      </Text>
+                    </View>
+                    <View style={styles.menuAction}>
+                      <Text style={styles.menuPrice}>{item.price}</Text>
+                      <TouchableOpacity
+                        onPress={() => addDishes(id, item.id)}
+                        style={styles.addButton}
+                        activeOpacity={0.7}
+                      >
+                        <Ionicons name="add" size={18} color="#fff" />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                ))}
+              </View>
             </View>
           )}
 
@@ -195,6 +221,59 @@ const styles = StyleSheet.create({
   },
   offersTitle: { fontWeight: "700", color: "#b45309", marginBottom: 6 },
   offerText: { color: "#92400e", fontSize: 13, marginBottom: 4 },
+  menuSection: {
+    marginBottom: 16,
+  },
+  menuList: {
+    backgroundColor: "#fff",
+    borderRadius: 14,
+    padding: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.03,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 16,
+    elevation: 2,
+  },
+  menuItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f1f5f9",
+  },
+  menuText: {
+    flex: 1,
+    marginRight: 10,
+  },
+  menuName: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#0f1720",
+    marginBottom: 4,
+  },
+  menuDescription: {
+    fontSize: 12,
+    color: "#64748b",
+    lineHeight: 18,
+  },
+  menuPrice: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#0f1720",
+    marginBottom: 8,
+  },
+  menuAction: {
+    alignItems: "flex-end",
+  },
+  addButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "#ff6b35",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   ctaRow: {
     flexDirection: "row",
     justifyContent: "space-between",

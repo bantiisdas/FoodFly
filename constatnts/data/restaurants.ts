@@ -1,3 +1,11 @@
+export type MenuItem = {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  image?: string;
+};
+
 export type Restaurant = {
   id: string;
   name: string;
@@ -10,6 +18,7 @@ export type Restaurant = {
   description: string;
   image: string;
   offers?: string[];
+  menu: MenuItem[];
 };
 
 export const restaurants: Restaurant[] = [
@@ -27,6 +36,29 @@ export const restaurants: Restaurant[] = [
     image:
       "https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=800&q=80",
     offers: ["10% off first order", "Free fries on orders over $30"],
+    menu: [
+      {
+        id: "menu_001_a",
+        name: "Classic Cheeseburger",
+        description:
+          "Juicy Angus beef patty with cheddar, lettuce, tomato, and house sauce.",
+        price: "$12",
+      },
+      {
+        id: "menu_001_b",
+        name: "Crispy Bacon Burger",
+        description:
+          "Smoked bacon, caramelized onions, and garlic aioli on a brioche bun.",
+        price: "$14",
+      },
+      {
+        id: "menu_001_c",
+        name: "Shake Trio",
+        description:
+          "Vanilla, chocolate, and strawberry milkshakes topped with whipped cream.",
+        price: "$9",
+      },
+    ],
   },
   {
     id: "resto_002",
@@ -42,6 +74,29 @@ export const restaurants: Restaurant[] = [
     image:
       "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
     offers: ["Free drink with bowl combo"],
+    menu: [
+      {
+        id: "menu_002_a",
+        name: "Mediterranean Grain Bowl",
+        description:
+          "Quinoa, roasted vegetables, chickpeas, and tahini dressing.",
+        price: "$13",
+      },
+      {
+        id: "menu_002_b",
+        name: "Green Power Salad",
+        description:
+          "Kale, avocado, apple, pumpkin seeds, and lemon-herb vinaigrette.",
+        price: "$11",
+      },
+      {
+        id: "menu_002_c",
+        name: "Berry Smoothie",
+        description:
+          "Mixed berries, coconut water, and banana for a refreshing boost.",
+        price: "$7",
+      },
+    ],
   },
   {
     id: "resto_003",
@@ -57,6 +112,27 @@ export const restaurants: Restaurant[] = [
     image:
       "https://images.unsplash.com/photo-1604908177522-7094b057a6ea?auto=format&fit=crop&w=800&q=80",
     offers: ["Free naan with any curry"],
+    menu: [
+      {
+        id: "menu_003_a",
+        name: "Butter Chicken",
+        description:
+          "Creamy tomato curry with tender chicken and aromatic spices.",
+        price: "$16",
+      },
+      {
+        id: "menu_003_b",
+        name: "Lamb Rogan Josh",
+        description: "Slow-simmered lamb in rich Kashmiri gravy.",
+        price: "$18",
+      },
+      {
+        id: "menu_003_c",
+        name: "Vegetable Samosas",
+        description: "Crispy pastry stuffed with spiced potatoes and peas.",
+        price: "$6",
+      },
+    ],
   },
   {
     id: "resto_004",
@@ -72,6 +148,27 @@ export const restaurants: Restaurant[] = [
     image:
       "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80",
     offers: ["Buy one get one 50% off", "Free garlic knots with large pizza"],
+    menu: [
+      {
+        id: "menu_004_a",
+        name: "Margherita Pizza",
+        description:
+          "Fresh mozzarella, basil, and tomato sauce on a wood-fired crust.",
+        price: "$15",
+      },
+      {
+        id: "menu_004_b",
+        name: "Truffle Mushroom Pizza",
+        description: "Wild mushrooms, truffle oil, ricotta, and arugula.",
+        price: "$19",
+      },
+      {
+        id: "menu_004_c",
+        name: "Garlic Knots",
+        description: "Warm garlic knots with herb butter and parmesan.",
+        price: "$7",
+      },
+    ],
   },
   {
     id: "resto_005",
@@ -87,6 +184,28 @@ export const restaurants: Restaurant[] = [
     image:
       "https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=800&q=80",
     offers: ["2 tacos + drink combo"],
+    menu: [
+      {
+        id: "menu_005_a",
+        name: "Carne Asada Tacos",
+        description: "Grilled steak, onions, cilantro, and salsa verde.",
+        price: "$10",
+      },
+      {
+        id: "menu_005_b",
+        name: "Veggie Taco Trio",
+        description:
+          "Roasted squash, black beans, avocado, and chipotle crema.",
+        price: "$11",
+      },
+      {
+        id: "menu_005_c",
+        name: "Loaded Nachos",
+        description:
+          "Crispy chips, cheese, pico de gallo, jalapeños, and guacamole.",
+        price: "$13",
+      },
+    ],
   },
   {
     id: "resto_006",
@@ -102,6 +221,26 @@ export const restaurants: Restaurant[] = [
     image:
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
     offers: ["Free miso soup with sushi set"],
+    menu: [
+      {
+        id: "menu_006_a",
+        name: "Salmon Nigiri",
+        description: "Fresh salmon over seasoned sushi rice.",
+        price: "$14",
+      },
+      {
+        id: "menu_006_b",
+        name: "Dragon Roll",
+        description: "Eel, avocado, cucumber, and tobiko with sweet sauce.",
+        price: "$18",
+      },
+      {
+        id: "menu_006_c",
+        name: "Miso Soup",
+        description: "Traditional miso broth with tofu and scallions.",
+        price: "$4",
+      },
+    ],
   },
   {
     id: "resto_007",
@@ -117,6 +256,27 @@ export const restaurants: Restaurant[] = [
     image:
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
     offers: ["Free spring rolls with entree"],
+    menu: [
+      {
+        id: "menu_007_a",
+        name: "Spicy Dan Dan Noodles",
+        description:
+          "Silky noodles tossed in chili sesame sauce and minced pork.",
+        price: "$12",
+      },
+      {
+        id: "menu_007_b",
+        name: "Pork Dumplings",
+        description: "Steamed dumplings with ginger-soy dipping sauce.",
+        price: "$8",
+      },
+      {
+        id: "menu_007_c",
+        name: "House Stir-Fry Bowl",
+        description: "Crispy vegetables, noodles, and savory sauce.",
+        price: "$13",
+      },
+    ],
   },
   {
     id: "resto_008",
@@ -132,5 +292,26 @@ export const restaurants: Restaurant[] = [
     image:
       "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80",
     offers: ["Free cookie with any pastry order"],
+    menu: [
+      {
+        id: "menu_008_a",
+        name: "Cinnamon Roll",
+        description:
+          "Soft roll swirled with cinnamon and topped with cream cheese icing.",
+        price: "$6",
+      },
+      {
+        id: "menu_008_b",
+        name: "Espresso Latte",
+        description: "Smooth espresso with steamed milk and velvety foam.",
+        price: "$5",
+      },
+      {
+        id: "menu_008_c",
+        name: "Berry Tart",
+        description: "Flaky pastry filled with custard and fresh berries.",
+        price: "$7",
+      },
+    ],
   },
 ];
